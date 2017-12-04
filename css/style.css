@@ -1,0 +1,9 @@
+.row {
+    margin-top: 25px;
+}
+#js-playerPickElement {
+    margin-bottom: 15px;
+}
+#js-resultsTableElement .row {
+    margin-top: 0;
+}

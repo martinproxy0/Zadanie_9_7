@@ -24,31 +24,37 @@ window.onload = function() {
         playerPickElem = document.getElementById('js-playerPick'),
         computerPickElem = document.getElementById('js-computerPick'),
         playerResultElem = document.getElementById('js-playerResult'),
-        computerResultElem = document.getElementById('js-computerResult');
+        computerResultElem = document.getElementById('js-computerResult'),
+        whoWin = document.getElementById('whoWin');
 
     newGameBtn.addEventListener('click', newGame);
     pickRock.addEventListener('click', function () {playerPick('rock');} );
     pickPaper.addEventListener('click', function () {playerPick('paper');} );
     pickScissors.addEventListener('click', function() {playerPick('scissors');} );
 
+    setGameElements();
 
-   
     function setGameElements() {
         switch(gameState) {
           case 'started':
               newGameElem.style.display = 'none';
               pickElem.style.display = 'block';
               resultsElem.style.display = 'block';
+              whoWin.style.display = 'none';
             break;
           case 'ended':
-              newGameBtn.innerText = 'Jeszcze raz';
-            break;
-          case 'notStarted':
-            break;
-          default:
+              newGameBtn.innerText = 'Again ?';
               newGameElem.style.display = 'block';
               pickElem.style.display = 'none';
               resultsElem.style.display = 'none';
+              whoWin.style.display = 'block';
+            break;
+          case 'notStarted':
+              newGameElem.style.display = 'block';
+              pickElem.style.display = 'none';
+              resultsElem.style.display = 'none';
+              whoWin.style.display = 'none';
+            break;
         }
     }
 
@@ -106,5 +112,19 @@ window.onload = function() {
     function setGamePoints() {
         playerPointsElem.innerHTML = player.score;
         computerPointsElem.innerHTML = computer.score;
+
+        checkGameWinner(player.score, computer.score);
+
     }
 
+    function checkGameWinner (player, computer) {
+        if (player === 10 || computer === 10) {
+            if (player > computer) {
+                whoWin.innerHTML = 'Player win with score ' + player + ' to ' + computer;
+            } else {
+                whoWin.innerHTML = 'Computer win with score ' + computer + ' to ' + player;
+            }
+            gameState = 'ended';
+            setGameElements();            
+        }
+    }
